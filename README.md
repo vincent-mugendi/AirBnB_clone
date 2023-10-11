@@ -1,11 +1,11 @@
 # AirBnB clone - The console
-<a href="./hbn_logo.png"><img src="./hbnb_logo.png" alt="hbn_logo"></a>
+<a href="./assets/hbn_logo.png"><img src="./assets/hbnb_logo.png" alt="hbn_logo"></a>
 ---
 This is an Alx Team project that involves creating a simplified version of the AirBnB web application
 
 ## PROJECT DESCRIPTION
 This team project is the first step in the ALX Software Engineer program towards building a full-stack AirBnB clone web application. It involves developing a custom command-line interface (console.py) for managing data in a database, as well as the base classes for storing and managing the data. The console.py will enable users to perform CRUD operations on data and other common data management tasks, while the base classes will provide a common interface for all data objects in the system.
-
+<a href="./assets/visual_helper.png"><img src="./assets/visual_helper.png" alt="Visual Helper Image"></a>
 
 https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20231010%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231010T051036Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=a9c33693aad500ce85ac202dd65f157197679ebad71ac21607043b20b01d2391
 1. a class BaseModel that defines all common attributes/methods for other classes: (models/base_model.py)
