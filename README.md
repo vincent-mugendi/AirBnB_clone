@@ -1,8 +1,8 @@
 # AirBnB clone - The console
 <a href="https://drive.google.com/file/d/1Iz-II7e24Ege8AsKPtvv5sgIuvAglgmt/view?usp=sharing"><img src="https://drive.google.com/file/d/1Iz-II7e24Ege8AsKPtvv5sgIuvAglgmt/view?usp=sharing" alt="hbnb logo"></a>
 ---
-## This is an Alx Team project that involves creating a simplified version of the AirBnB web application
----
+This is an Alx Team project that involves creating a simplified version of the AirBnB web application
+
 ## PROJECT DESCRIPTION
 This team project is the first step in the ALX Software Engineer program towards building a full-stack AirBnB clone web application. It involves developing a custom command-line interface (console.py) for managing data in a database, as well as the base classes for storing and managing the data. The console.py will enable users to perform CRUD operations on data and other common data management tasks, while the base classes will provide a common interface for all data objects in the system.
 
