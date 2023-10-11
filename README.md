@@ -1,5 +1,5 @@
 # AirBnB clone - The console
-<a href="https://drive.google.com/file/d/1Iz-II7e24Ege8AsKPtvv5sgIuvAglgmt/view?usp=sharing"><img src="https://drive.google.com/file/d/1Iz-II7e24Ege8AsKPtvv5sgIuvAglgmt/view?usp=sharing" alt="hbnb logo"></a>
+<a href="./hbn_logo.png"><img src="./hbnb_logo.png" alt="hbn_logo"></a>
 ---
 This is an Alx Team project that involves creating a simplified version of the AirBnB web application
 
