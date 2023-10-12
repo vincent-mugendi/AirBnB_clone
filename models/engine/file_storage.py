@@ -1,46 +1,56 @@
 #!/usr/bin/python3
-"""Defines the FileStorage class."""
+"""
+Handles I/O, writing and reading, of JSON for storage of all class instances
+"""
 import json
-from os.path import exists
-from models.base_model import BaseModel
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
+from models import base_model, amenity, city, place, review, state, user
+from datetime import datetime
+
+strptime = datetime.strptime
+to_json = base_model.BaseModel.to_json
+
 
 class FileStorage:
-    __file_path = "file.json"
+    """handles long term storage of all class instances"""
+    CNC = {
+        'BaseModel': base_model.BaseModel,
+        'Amenity': amenity.Amenity,
+        'City': city.City,
+        'Place': place.Place,
+        'Review': review.Review,
+        'State': state.State,
+        'User': user.User
+    }
+    __file_path = './dev/file.json'
     __objects = {}
 
     def all(self):
+        """returns private attribute: __objects"""
         return FileStorage.__objects
 
     def new(self, obj):
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        """sets / updates in __objects the obj with key <obj class name>.id"""
+        bm_id = "{}.{}".format(type(obj).__name__, obj.id)
+        FileStorage.__objects[bm_id] = obj
 
     def save(self):
-        serialized_objects = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
-        with open(FileStorage.__file_path, 'w') as file:
-            json.dump(serialized_objects, file)
+        """serializes __objects to the JSON file (path: __file_path)"""
+        fname = FileStorage.__file_path
+        d = {}
+        for bm_id, bm_obj in FileStorage.__objects.items():
+            d[bm_id] = bm_obj.to_json()
+        with open(fname, mode='w', encoding='utf-8') as f_io:
+            json.dump(d, f_io)
 
     def reload(self):
-        if exists(FileStorage.__file_path):
-            with open(FileStorage.__file_path, 'r') as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    class_name, obj_id = key.split('.')
-                    if class_name == 'BaseModel':
-                        obj = BaseModel(**value)
-                    elif class_name == 'State':
-                        obj = State(**value)
-                    elif class_name == 'City':
-                        obj = City(**value)
-                    elif class_name == 'Amenity':
-                        obj = Amenity(**value)
-                    elif class_name == 'Place':
-                        obj = Place(**value)
-                    elif class_name == 'Review':
-                        obj = Review(**value)
-                    FileStorage.__objects[key] = obj
+        """if file exists, deserializes JSON file to __objects, else nothing"""
+        fname = FileStorage.__file_path
+        FileStorage.__objects = {}
+        try:
+            with open(fname, mode='r', encoding='utf-8') as f_io:
+                new_objs = json.load(f_io)
+        except FileNotFoundError:
+            return
+        for o_id, d in new_objs.items():
+            k_cls = d['__class__']
+            FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
