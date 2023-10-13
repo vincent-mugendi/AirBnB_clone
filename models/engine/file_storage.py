@@ -1,56 +1,41 @@
 #!/usr/bin/python3
-"""
-Handles I/O, writing and reading, of JSON for storage of all class instances
-"""
+
 import json
-from models import base_model, amenity, city, place, review, state, user
-from datetime import datetime
-
-strptime = datetime.strptime
-to_json = base_model.BaseModel.to_json
-
+from models.base_model import BaseModel
 
 class FileStorage:
-    """handles long term storage of all class instances"""
-    CNC = {
-        'BaseModel': base_model.BaseModel,
-        'Amenity': amenity.Amenity,
-        'City': city.City,
-        'Place': place.Place,
-        'Review': review.Review,
-        'State': state.State,
-        'User': user.User
-    }
-    __file_path = './dev/file.json'
-    __objects = {}
+	__file_path = "file.json"
+	__objects = {}
 
-    def all(self):
-        """returns private attribute: __objects"""
-        return FileStorage.__objects
+	def all(self):
+		"""Returns the dictionary __objects"""
+		return self.__objects
 
-    def new(self, obj):
-        """sets / updates in __objects the obj with key <obj class name>.id"""
-        bm_id = "{}.{}".format(type(obj).__name__, obj.id)
-        FileStorage.__objects[bm_id] = obj
+	def new(self, obj):
+		"""Sets in __objects the obj with key <obj class name>.id"""
+		key = "{}.{}".format(obj.__class__.__name__, obj.id)
+		self.__objects[key] = obj
 
-    def save(self):
-        """serializes __objects to the JSON file (path: __file_path)"""
-        fname = FileStorage.__file_path
-        d = {}
-        for bm_id, bm_obj in FileStorage.__objects.items():
-            d[bm_id] = bm_obj.to_json()
-        with open(fname, mode='w', encoding='utf-8') as f_io:
-            json.dump(d, f_io)
+	def save(self):
+		"""Serializes __objects to the JSON file (path: __file_path)"""
+		serialized_objects = {}
+		for key, obj in self.__objects.items():
+			serialized_objects[key] = obj.to_dict()
 
-    def reload(self):
-        """if file exists, deserializes JSON file to __objects, else nothing"""
-        fname = FileStorage.__file_path
-        FileStorage.__objects = {}
-        try:
-            with open(fname, mode='r', encoding='utf-8') as f_io:
-                new_objs = json.load(f_io)
-        except FileNotFoundError:
-            return
-        for o_id, d in new_objs.items():
-            k_cls = d['__class__']
-            FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
+		with open(self.__file_path, "w") as json_file:
+			json.dump(serialized_objects, json_file)
+
+	def reload(self):
+		"""Deserializes the JSON file to __objects (if the file exists)"""
+		try:
+			with open(self.__file_path, "r") as json_file:
+				loaded_objects = json.load(json_file)
+				for key, obj_dict in loaded_objects.items():
+					class_name, obj_id = key.split('.')
+					obj_instance = BaseModel.from_dict(obj_dict)
+					self.__objects[key] = obj_instance
+		except FileNotFoundError:
+			pass
+
+storage = FileStorage()
+storage.reload()
