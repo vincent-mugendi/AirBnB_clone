@@ -1,12 +1,18 @@
 #!/usr/bin/python3
-"""Defines the State class."""
+"""
+This module defines the State class, inheriting from BaseMode
+"""
 
 from models.base_model import BaseModel
 
 class State(BaseModel):
-    """Represents a state."""
-    name = ""
+	"""
+	State class that inherits from BaseModel
+	"""
+	name = ""
 
-    def __init__(self, *args, **kwargs):
-        """Initializes a new State."""
-        super().__init__(*args, **kwargs)
+	def __init__(self, *args, **kwargs):
+		"""
+		Initializes State instance
+		"""
+		super().__init__(*args, **kwargs)

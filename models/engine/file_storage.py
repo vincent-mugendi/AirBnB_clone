@@ -1,11 +1,21 @@
 #!/usr/bin/python3
+"""
+This module defines the FileStorage class for serialization and deserialization
+"""
 
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 class FileStorage:
 	__file_path = "file.json"
 	__objects = {}
+	CLASSES = {}
 
 	def all(self):
 		"""Returns the dictionary __objects"""
@@ -28,12 +38,26 @@ class FileStorage:
 	def reload(self):
 		"""Deserializes the JSON file to __objects (if the file exists)"""
 		try:
-			with open(self.__file_path, "r") as json_file:
-				loaded_objects = json.load(json_file)
-				for key, obj_dict in loaded_objects.items():
-					class_name, obj_id = key.split('.')
-					obj_instance = BaseModel.from_dict(obj_dict)
-					self.__objects[key] = obj_instance
+			with open(self.__file_path, 'r', encoding='utf-8') as file:
+				loaded_objects = json.load(file)
+			for key, value in loaded_objects.items():
+				class_name = value['__class__']
+				obj_id = value['id']
+				if class_name == 'BaseModel':
+					obj_instance = BaseModel(**value)
+				elif class_name == 'State':
+					obj_instance = State(**value)
+				elif class_name == 'City':
+					obj_instance = City(**value)
+				elif class_name == 'Amenity':
+					obj_instance = Amenity(**value)
+				elif class_name == 'Place':
+					obj_instance = Place(**value)
+				elif class_name == 'Review':
+					obj_instance = Review(**value)
+				else:
+					raise ValueError("Unknown class: {}".format(class_name))
+				self.__objects['{}.{}'.format(class_name, obj_id)] = obj_instance
 		except FileNotFoundError:
 			pass
 
