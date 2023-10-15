@@ -17,6 +17,6 @@ class User(BaseModel):
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes User instance
+        Func Initializes User instance
         """
         super().__init__(*args, **kwargs)
