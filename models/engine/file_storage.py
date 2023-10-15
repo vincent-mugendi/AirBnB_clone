@@ -37,7 +37,7 @@ class FileStorage:
             json.dump(serialized_objects, json_file)
 
     def reload(self):
-        """Deserializes the JSON file to __objects (if the file exists)"""
+        """Func Deserializes the JSON file to __objects (if the file exists)"""
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as file:
                 loaded_objects = json.load(file)
