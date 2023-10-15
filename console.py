@@ -2,7 +2,6 @@
 """
 This module defines the console for the AirBnB clone project.
 """
-
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -12,7 +11,6 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-
 storage = FileStorage()
 storage.CLASSES = {
     'BaseModel': BaseModel,
@@ -23,44 +21,36 @@ storage.CLASSES = {
     'Place': Place,
     'Review': Review,
 }
-
-
 class HBNBCommand(cmd.Cmd):
     """
     The command interpreter class
     """
     prompt = "(hbnb) "
-
     def do_quit(self, arg):
         """
         Quit command to exit the program
         """
         return True
-
     def do_EOF(self, arg):
         """
         Exit the console at end of file (EOF)
         """
         return True
-
     def emptyline(self):
         """
         Do nothing on empty input line
         """
         pass
-
     def help_quit(self):
         """
         Print help message for the quit command
         """
         print("Quit command to exit the program")
-
     def help_EOF(self):
         """
         Print help message for the EOF command
         """
         print("Exit the console at end of file (EOF)")
-
     def do_create(self, arg):
         """
         Create a new instance of BaseModel,
@@ -73,7 +63,6 @@ class HBNBCommand(cmd.Cmd):
             new_instance = storage.CLASSES[arg]()
             new_instance.save()
             print(new_instance.id)
-
     def do_show(self, arg):
         """
         Print the string representation of an instance
@@ -92,7 +81,6 @@ class HBNBCommand(cmd.Cmd):
                 print(objects[key])
             else:
                 print("** no instance found **")
-
     def do_destroy(self, arg):
         """
         Delete an instance based on class name and ID
@@ -112,20 +100,24 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 print("** no instance found **")
-
     def do_all(self, arg):
         """
         Print all string representations of instances using <class name>.all()
         """
-        args = arg.split()
-        if not args or args[0] not in storage.CLASSES.keys():
-            print("** class doesn't exist **")
+        args = arg.split('.')
+        if len(args) != 2:
+            print("*** Unknown syntax: {}.all()".format(arg))
             return
 
         class_name = args[0]
-        class_instances = storage.all().values()
-        instances = [str(instance) for instance in class_instances if isinstance(instance, storage.CLASSES[class_name])]
-        print(instances)
+        method_name = args[1]
+
+        if class_name not in storage.CLASSES.keys():
+            print("** class doesn't exist **")
+
+        else:
+            class_instances = getattr(storage.CLASSES[class_name], method_name)()
+            print([str(obj) for obj in class_instances])
 
     def do_update(self, arg):
         """
@@ -151,7 +143,5 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 print("** no instance found **")
-
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
