@@ -19,7 +19,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_object_creation(self):
         """
-        Test the creation of BaseModel instance and its attributes
+        Test creation of BaseModel instance and its attributes
         """
         self.assertIsInstance(self.my_model, BaseModel)
         self.assertEqual(self.my_model.name, "My First Model")
