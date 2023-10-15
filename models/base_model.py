@@ -58,7 +58,7 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Serializes the object to a dictionary.
+        Function Serializes the object to a dictionary.
         """
         obj_dict = self.__dict__.copy()
 
