@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
     """
-    Unit tests for the BaseModel class
+    Tests for the BaseModel class
     """
 
     def setUp(self):
