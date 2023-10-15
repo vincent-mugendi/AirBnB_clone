@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module defines the Review class, inheriting from BaseModel
+    Module defines the Review class, inheriting from BaseModel
 """
 
 from models.base_model import BaseModel
