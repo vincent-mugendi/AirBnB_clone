@@ -16,6 +16,6 @@ class Review(BaseModel):
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes Review instance
+        Function Initializes Review instance
         """
         super().__init__(*args, **kwargs)
