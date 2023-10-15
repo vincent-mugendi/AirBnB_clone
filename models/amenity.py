@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module defines the Amenity class, inheriting from BaseModel
+The Module defines the Amenity class, inheriting from BaseModel
 """
 
 from models.base_model import BaseModel
