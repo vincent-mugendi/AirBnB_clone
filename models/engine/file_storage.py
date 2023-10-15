@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module defines the FileStorage class for serialization and deserialization
+Module defines the FileStorage class for serialization and deserialization
 """
 
 import json
