@@ -24,6 +24,6 @@ class Place(BaseModel):
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes Place instance
+        Function Initializes Place instance
         """
         super().__init__(*args, **kwargs)
