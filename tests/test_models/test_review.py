@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 from models.review import Review
 
+
 class TestReviewMethods(unittest.TestCase):
     """Class for testing Review methods"""
 
@@ -67,6 +68,7 @@ class TestReviewMethods(unittest.TestCase):
         self.assertEqual(new_instance.place_id, "456")
         self.assertEqual(new_instance.user_id, "789")
         self.assertEqual(new_instance.text, "This is a test review")
+
 
 if __name__ == '__main__':
     unittest.main()

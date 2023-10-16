@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 from models.state import State
 
+
 class TestStateMethods(unittest.TestCase):
     """Class for testing State methods"""
 
@@ -61,6 +62,7 @@ class TestStateMethods(unittest.TestCase):
         self.assertEqual(new_instance.created_at, datetime(2023, 1, 1))
         self.assertEqual(new_instance.updated_at, datetime(2023, 1, 1))
         self.assertEqual(new_instance.name, "Test State")
+
 
 if __name__ == '__main__':
     unittest.main()

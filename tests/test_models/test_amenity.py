@@ -7,6 +7,7 @@ from datetime import datetime
 import models
 from models.amenity import Amenity
 
+
 class TestAmenityMethods(unittest.TestCase):
     """Class for testing Amenity methods"""
 
@@ -56,7 +57,7 @@ class TestAmenityMethods(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(amenity_json)
-        except:
+        except IOError:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -75,6 +76,7 @@ class TestAmenityMethods(unittest.TestCase):
         actual = self.amenity.name
         expected = "greatWifi"
         self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main()

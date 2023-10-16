@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 from models.city import City
 
+
 class TestCityMethods(unittest.TestCase):
     """Class for testing City methods"""
 
@@ -64,6 +65,7 @@ class TestCityMethods(unittest.TestCase):
         self.assertEqual(new_instance.updated_at, datetime(2023, 1, 1))
         self.assertEqual(new_instance.state_id, "456")
         self.assertEqual(new_instance.name, "Test City")
+
 
 if __name__ == '__main__':
     unittest.main()

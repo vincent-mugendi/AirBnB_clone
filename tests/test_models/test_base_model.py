@@ -4,6 +4,8 @@ Unit Test for BaseModel Class
 """
 # run_tests.py
 import unittest
+from datetime import datetime
+from models.base_model import BaseModel
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()
@@ -13,9 +15,6 @@ if __name__ == '__main__':
     runner = unittest.TextTestRunner()
     runner.run(suite)
 
-import unittest
-from datetime import datetime
-from models.base_model import BaseModel
 
 class TestBaseModelMethods(unittest.TestCase):
     """Class for testing BaseModel methods"""
@@ -72,6 +71,7 @@ class TestBaseModelMethods(unittest.TestCase):
         self.assertEqual(new_instance.id, "123")
         self.assertEqual(new_instance.created_at, datetime(2023, 1, 1))
         self.assertEqual(new_instance.updated_at, datetime(2023, 1, 1))
+
 
 if __name__ == '__main__':
     unittest.main()

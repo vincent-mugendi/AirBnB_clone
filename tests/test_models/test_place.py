@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 from models.place import Place
 
+
 class TestPlaceMethods(unittest.TestCase):
     """Class for testing Place methods"""
 
@@ -91,6 +92,7 @@ class TestPlaceMethods(unittest.TestCase):
         self.assertEqual(new_instance.latitude, 40.7128)
         self.assertEqual(new_instance.longitude, -74.0060)
         self.assertEqual(new_instance.amenity_ids, ["a1", "a2"])
+
 
 if __name__ == '__main__':
     unittest.main()
