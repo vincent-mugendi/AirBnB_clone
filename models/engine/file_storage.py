@@ -3,6 +3,7 @@
 Module defines the FileStorage class for serialization and deserialization
 """
 
+import os
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -16,7 +17,20 @@ from models.review import Review
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
-    CLASSES = {}
+    CLASSES = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review,
+    }
+
+    def __init__(self):
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        self.__file_path = os.path.join(current_directory, "file.json")
+        self.__objects = {}
 
     def all(self):
         """Func Returns the dictionary __objects"""
@@ -46,6 +60,8 @@ class FileStorage:
                 obj_id = value['id']
                 if class_name == 'BaseModel':
                     obj_instance = BaseModel(**value)
+                elif class_name == 'User':
+                    obj_instance = User(**value)
                 elif class_name == 'State':
                     obj_instance = State(**value)
                 elif class_name == 'City':
