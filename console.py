@@ -4,16 +4,14 @@ This module defines the console for the AirBnB clone project.
 """
 import cmd
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from models.engine.file_storage import FileStorage
-
 storage = FileStorage()
-storage.reload()
 storage.CLASSES = {
     'BaseModel': BaseModel,
     'User': User,
@@ -30,14 +28,6 @@ class HBNBCommand(cmd.Cmd):
     The command interpreter class
     """
     prompt = "(hbnb) "
-
-    def default(self, line):
-        class_name, method = line.split('.')
-        if method == "all()":
-            self.do_all(class_name)
-        else:
-            print("*** Unknown syntax: "
-                  "{}.{}()".format(class_name, method[:-2]))
 
     def do_quit(self, arg):
         """
@@ -121,20 +111,26 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_all(self, class_name):
+    def do_all(self, arg):
         """
         Print all string representations of instances using <class name>.all()
         """
-        class_instances = []
-        if class_name not in storage.CLASSES:
+        args = arg.split('.')
+        if len(args) != 2:
+            print("*** Unknown syntax: {}.all()".format(arg))
+            return
+
+        class_name = args[0]
+        method_name = args[1]
+
+        if class_name not in storage.CLASSES.keys():
             print("** class doesn't exist **")
+
         else:
-            instances = [
-                obj
-                for obj in storage.all().values()
-                if isinstance(obj, storage.CLASSES[class_name])
-            ]
-            print([str(obj) for obj in instances])
+            class_instances = storage.CLASSES[class_name]
+            method_instance = getattr(class_instance, method_name)
+            result = method_instance()
+            print([str(obj) for obj in class_instances])
 
     def do_update(self, arg):
         """
