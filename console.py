@@ -30,12 +30,21 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def default(self, line):
-        class_name, method = line.split('.')
-        if method == "all()":
-            self.do_all(class_name)
+        """
+        Method handles unknown commands
+        """
+        if '.' in line and '(' in line and line.endswith(')'):
+            class_name, method_call = line.split('.', 1)
+            method_name = method_call.split('(', 1)[0]
+            if method_name == 'all':
+                self.do_all(class_name)
+            elif method_name == 'count':
+                self.do_count(class_name)
+            else:
+                print("*** Unknown syntax: "
+                      "{}.{}()".format(class_name, method_name))
         else:
-            print("*** Unknown syntax: "
-                  "{}.{}()".format(class_name, method[:-2]))
+            print("*** Unknown syntax: {}".format(line))
 
     def do_quit(self, arg):
         """
@@ -158,6 +167,19 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 print("** no instance found **")
+
+    def do_count(self, class_name):
+        """
+        Retrieve the number of instances of a class: <class name>.count()
+        """
+        if class_name not in storage.CLASSES:
+            print("** class doesn't exist **")
+        else:
+            instances_count = len([
+                obj for obj in storage.all().values()
+                if isinstance(obj, storage.CLASSES[class_name])
+            ])
+            print(instances_count)
 
 
 if __name__ == '__main__':
