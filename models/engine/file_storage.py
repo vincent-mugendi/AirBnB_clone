@@ -46,6 +46,8 @@ class FileStorage:
                 obj_id = value['id']
                 if class_name == 'BaseModel':
                     obj_instance = BaseModel(**value)
+                elif class_name == 'User':
+                    obj_instance = User(**value)
                 elif class_name == 'State':
                     obj_instance = State(**value)
                 elif class_name == 'City':

@@ -29,6 +29,14 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
+    def default(self, line):
+        class_name, method = line.split('.')
+        if method == "all()":
+            self.do_all(class_name)
+        else:
+            print("*** Unknown syntax: "
+                  "{}.{}()".format(class_name, method[:-2]))
+
     def do_quit(self, arg):
         """
         Quit command to exit the program
@@ -111,26 +119,20 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_all(self, arg):
+    def do_all(self, class_name):
         """
         Print all string representations of instances using <class name>.all()
         """
-        args = arg.split('.')
-        if len(args) != 2:
-            print("*** Unknown syntax: {}.all()".format(arg))
-            return
-
-        class_name = args[0]
-        method_name = args[1]
-
-        if class_name not in storage.CLASSES.keys():
+        class_instances = []
+        if class_name not in storage.CLASSES:
             print("** class doesn't exist **")
-
         else:
-            class_instances = storage.CLASSES[class_name]
-            method_instance = getattr(class_instance, method_name)
-            result = method_instance()
-            print([str(obj) for obj in class_instances])
+            instances = [
+                obj
+                for obj in storage.all().values()
+                if isinstance(obj, storage.CLASSES[class_name])
+            ]
+            print([str(obj) for obj in instances])
 
     def do_update(self, arg):
         """
