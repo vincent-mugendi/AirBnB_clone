@@ -3,6 +3,8 @@
 Unit Test for BaseModel Class
 """
 # run_tests.py
+
+import sys
 import unittest
 from datetime import datetime
 from models.base_model import BaseModel
