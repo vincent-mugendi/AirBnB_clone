@@ -34,12 +34,20 @@ class HBNBCommand(cmd.Cmd):
         Method handles unknown commands
         """
         if '.' in line and '(' in line and line.endswith(')'):
-            class_name, method_call = line.split('.', 1)
-            method_name = method_call.split('(', 1)[0]
+            class_method = line.split('.', 1)
+            class_name, method_call = class_method[0], class_method[1][:-1]
+            method_name, args = method_call.split('(', 1)
+            args = args.rstrip(')').strip()
+
             if method_name == 'all':
                 self.do_all(class_name)
             elif method_name == 'count':
                 self.do_count(class_name)
+            elif method_name == 'show':
+                if args:
+                    self.do_show(class_name + ' ' + args)
+                else:
+                    print("** instance id missing **")
             else:
                 print("*** Unknown syntax: "
                       "{}.{}()".format(class_name, method_name))
@@ -94,19 +102,23 @@ class HBNBCommand(cmd.Cmd):
         Print the string representation of an instance
         """
         args = arg.split()
-        if not arg:
+        if len(args) < 1:
             print("** class name missing **")
-        elif args[0] not in storage.CLASSES.keys():
+            return
+        class_name = args[0]
+        if class_name not in storage.CLASSES:
             print("** class doesn't exist **")
-        elif len(args) < 2:
+            return
+        if len(args) < 2:
             print("** instance id missing **")
+            return
+        instance_id = args[1].strip('"')
+        key = "{}.{}".format(class_name, instance_id)
+        objects = storage.all()
+        if key in objects:
+            print(objects[key])
         else:
-            key = args[0] + "." + args[1]
-            objects = storage.all()
-            if key in objects:
-                print(objects[key])
-            else:
-                print("** no instance found **")
+            print("** no instance found **")
 
     def do_destroy(self, arg):
         """
