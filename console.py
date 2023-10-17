@@ -43,6 +43,11 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(class_name)
             elif method_name == 'count':
                 self.do_count(class_name)
+            elif method_name == 'destroy':
+                if args:
+                    self.do_destroy(class_name + ' ' + args)
+                else:
+                    print("** instance id missing **")
             elif method_name == 'show':
                 if args:
                     self.do_show(class_name + ' ' + args)
@@ -132,7 +137,9 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            key = args[0] + "." + args[1]
+            class_name = args[0]
+            instance_id = args[1].strip('"')
+            key = "{}.{}".format(class_name, instance_id)
             objects = storage.all()
             if key in objects:
                 del objects[key]
